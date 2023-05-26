@@ -6,10 +6,8 @@ before_script:
   - python --version
 
 build_job:
-  stage: build  
-  tags:
-    - python  
-  image: python:3.9
+  stage: build    
+  image: python:3.8
   script:
     - python -m venv venv
     - source venv/bin/activate
