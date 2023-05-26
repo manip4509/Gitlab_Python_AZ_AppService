@@ -17,17 +17,15 @@ build_job:
     - venv/
     - requirements.txt
 
-# deploy_job: 
-#   stage: deploy
-#   tags:
-#     - azure  
-#   image: mcr.microsoft.com/azure-cli
-#   dependencies:
-#     - build_job
-#   before_script:
-#     - 'cd venv'
-#     - 'zip -r ./artifacts.zip .'  
-#     - 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID'
-#     - 'az account set --subscription $AZURE_SUBSCRIPTION_ID'
-#   script:
-#     - az webapp deployment source config-zip --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --src ./artifacts.zip
+deploy_job: 
+  stage: deploy  
+  image: mcr.microsoft.com/azure-cli
+  dependencies:
+    - build_job
+  before_script:
+    - 'cd venv'
+    - 'zip -r ./artifacts.zip .'  
+    - 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID'
+    - 'az account set --subscription $AZURE_SUBSCRIPTION_ID'
+  script:
+    - az webapp deployment source config-zip --resource-group $AZURE_RESOURCE_GROUP --name $AZURE_WEBAPP_NAME --src ./artifacts.zip
