@@ -7,8 +7,6 @@ before_script:
 
 build_job:
   stage: build  
-  tags:
-    - python  
   image: python:3.9
   script:
     - python -m venv venv
